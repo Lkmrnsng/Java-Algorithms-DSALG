@@ -25,10 +25,8 @@ public class SortingAlgorithms {
 
     }
 
-    /*
-     * Define AT LEAST ONE more sorting algorithm here, apart from the
-     * ones given above. Make sure that the method accepts an array of
-     * records
-     */
+    public void quickSort(Record[] arr) {
+		
+	}
 
 }
