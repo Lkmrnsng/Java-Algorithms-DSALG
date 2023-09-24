@@ -27,6 +27,7 @@ public class SortingAlgorithms {
 
     public void quickSort(Record[] arr) {
 		//added comments
+        //added second comment
 	}
 
 }
