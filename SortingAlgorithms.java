@@ -42,21 +42,71 @@ public class SortingAlgorithms {
         }
     }
 
-    public void mergeSort(Record[] arr, int p, int r) {
+    public void mergeSort(Record[] arr, int p, int r) 
+	{
         // TODO: Implement this sorting algorithm here.
+
+		if (p < r) {
+			int q = (p + r) / 2;
+	
+			mergeSort(arr, p, q);
+			mergeSort(arr, q + 1, r);
+			merge(arr, p, q, r);
+		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-    }
+    	}
+
+	private void merge(Record[] arr, int p, int q, int r) 
+{
+		int n1 = q - p + 1;
+        int n2 = r - q;
+
+        Record[] leftArr = new Record[n1];
+        Record[] rightArr = new Record[n2];
+
+        for (int i = 0; i < n1; i++) {
+            leftArr[i] = arr[p + i];
+        }
+
+        for (int j = 0; j < n2; j++) {
+            rightArr[j] = arr[q + 1 + j];
+        }
+
+        int i = 0, j = 0, k = p;
+
+        while (i < n1 && j < n2) {
+            int leftValue = leftArr[i].value;
+            int rightValue = rightArr[j].value;
+
+            if (leftValue <= rightValue) {
+                arr[k] = leftArr[i];
+                i++;
+            } else {
+                arr[k] = rightArr[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < n1) 
+	{
+            arr[k] = leftArr[i];
+            i++;
+            k++;
+        }
+
+        while (j < n2) 
+	{
+            arr[k] = rightArr[j];
+            j++;
+            k++;
+        }
+}
+    
+	private static class Record 
+	{
+        int value;
+    	}
 
     public void quickSort(Record[] arr, int lowerBound, int upperBound) {
 		//if we've reached an array of just 1 element, then leave the recursion because we're done
