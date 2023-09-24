@@ -5,17 +5,17 @@ public class Main {
 		//String filePath = "data/random25000.txt";
 		//String filePath = "data/random50000.txt";
 		//String filePath = "data/random75000.txt";
-		String filePath = "data/random100000.txt";
+		//String filePath = "data/random100000.txt";
 		//String filePath = "data/almostsorted.txt";
-		//String filePath = "data/totallyreversed.txt";
+		String filePath = "data/totallyreversed.txt";
         FileReader fileReader = new FileReader();
         SortingAlgorithms algos = new SortingAlgorithms();
         Record[] records = fileReader.readFile(filePath);
-        
+		
         //algos.insertionSort(records, records.length);
         //algos.selectionSort(records, records.length);
 		//@jan
-		algos.quickSort(records, 0, records.length - 1);
+		//algos.quickSort(records, 0, records.length - 1);
 
         for (Record record : records) {
             int id = record.getIdNumber();

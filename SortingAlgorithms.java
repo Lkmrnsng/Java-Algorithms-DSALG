@@ -64,9 +64,8 @@ public class SortingAlgorithms {
 			return;
 		}
 		
-		//initialize pivot
-		int pivot = arr[upperBound].getIdNumber();
-		//this.getMedianOfThree(arr, lowerBound, upperBound);
+		//set median of three as pivot
+		int pivot = this.getMedianOfThree(arr, lowerBound, upperBound);
 		
 		//partition the array
 		int left = this.partition(arr, lowerBound, upperBound, pivot);
@@ -78,23 +77,27 @@ public class SortingAlgorithms {
 	
 	/*find and return the median of three as pivot*/
 	private int getMedianOfThree(Record[] arr, int lowerBound, int upperBound) {
-		int first = arr[lowerBound].getIdNumber();
-		int last = arr[upperBound].getIdNumber();
-		int middleIndex = (upperBound - lowerBound) / 2;
-		int middle = arr[middleIndex].getIdNumber();
+		int first = lowerBound;
+		int last = upperBound;
+		int middle = (upperBound + lowerBound) / 2;
 		
-		//find the middle value of the 3
-		if ((first <= middle && middle <= last) || (last <= middle && middle <= first)) {
-			return middle;
-		} 
+		// sort the first, middle, and last elements
+        if (arr[first].getIdNumber() > arr[middle].getIdNumber()) {
+            swap(arr, first, middle);
+        }
 		
-		else if ((middle <= first && first <= last) || (last <= first && first <= middle)) {
-			return first;
-		} 
+        if (arr[first].getIdNumber() > arr[last].getIdNumber()) {
+            swap(arr, first, last);
+        }
 		
-		else {
-			return last;
-		}
+        if (arr[middle].getIdNumber() > arr[last].getIdNumber()) {
+            swap(arr, middle, last);
+        }
+		
+		//swap the median with the last element so it becomes the pivot
+		swap(arr, middle, last);
+		
+		return arr[last].getIdNumber();
 	}
 	
 	/*partition to left and right helper method*/
