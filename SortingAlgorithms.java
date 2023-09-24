@@ -11,25 +11,22 @@ public class SortingAlgorithms {
      */
 
     public void insertionSort(Record[] arr, int n) {
-        // TODO: Implement this sorting algorithm here.
-
+        for (int i = 1; i < n; i++) {
+            Record key = arr[i];
+            int j = i - 1;
+    
+            while (j >= 0 && arr[j].getIdNumber() > key.getIdNumber()) {
+                arr[j + 1] = arr[j];
+                j = j - 1;
+            }
+    
+            arr[j + 1] = key;
+        }
     }
 
     public void selectionSort(Record[] arr, int n) {
         // TODO: Implement this sorting algorithm here.
-        for (int i = 0; i < n - 1; i++) {
-            int minIndex = i;
-            for (int j = i + 1; j < n; j++) {
-                
-                if (arr[j].getIdNumber() < arr[minIndex].getIdNumber()) {
-                    minIndex = j;
-                }
-            }
 
-            Record temp = arr[i];
-            arr[i] = arr[minIndex];
-            arr[minIndex] = temp;
-        }
     }
 
     public void mergeSort(Record[] arr, int p, int r) {
@@ -38,8 +35,7 @@ public class SortingAlgorithms {
     }
 
     public void quickSort(Record[] arr) {
-		//added comments
-        //added second comment
+		
 	}
 
 }
