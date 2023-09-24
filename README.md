@@ -9,7 +9,8 @@
 - to test for all files
 
 ### JAN STATUS CHECK - Merge
-- 
+- Added  Code
+- Not Yet Tested
 
 ### MEGAN STATUS CHECK - Quicksort
 - tested for all files and works
