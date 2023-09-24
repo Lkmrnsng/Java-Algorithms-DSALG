@@ -44,11 +44,92 @@ public class SortingAlgorithms {
 
     public void mergeSort(Record[] arr, int p, int r) {
         // TODO: Implement this sorting algorithm here.
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
     }
 
-    public void quickSort(Record[] arr) {
+    public void quickSort(Record[] arr, int lowerBound, int upperBound) {
+		//if we've reached an array of just 1 element, then leave the recursion because we're done
+		if(lowerBound >= upperBound) {
+			return;
+		}
 		
+		//initialize pivot
+		int pivot = arr[upperBound].getIdNumber();
+		//this.getMedianOfThree(arr, lowerBound, upperBound);
+		
+		//partition the array
+		int left = this.partition(arr, lowerBound, upperBound, pivot);
+	
+		//recursively sort the left and right sides
+		this.quickSort(arr, lowerBound, left - 1);
+		this.quickSort(arr, left + 1, upperBound);
 	}
-
+	
+	/*find and return the median of three as pivot*/
+	private int getMedianOfThree(Record[] arr, int lowerBound, int upperBound) {
+		int first = arr[lowerBound].getIdNumber();
+		int last = arr[upperBound].getIdNumber();
+		int middleIndex = (upperBound - lowerBound) / 2;
+		int middle = arr[middleIndex].getIdNumber();
+		
+		//find the middle value of the 3
+		if ((first <= middle && middle <= last) || (last <= middle && middle <= first)) {
+			return middle;
+		} 
+		
+		else if ((middle <= first && first <= last) || (last <= first && first <= middle)) {
+			return first;
+		} 
+		
+		else {
+			return last;
+		}
+	}
+	
+	/*partition to left and right helper method*/
+	private int partition(Record[] arr, int lowerBound, int upperBound, int pivot) {
+		int left = lowerBound;
+		int right = upperBound;
+		
+		//partition the elements to the left and right of pivot
+		while(left < right) {
+			//keep looking for element with value greater than pivot, if found, stop
+			while(arr[left].getIdNumber() <= pivot && left < right) {
+				left++;
+			}
+			
+			//keep looking for element with value less than pivot, if found, stop
+			while(arr[right].getIdNumber() >= pivot && right > left) {
+				right--;
+			}
+			
+			//swap the two
+			this.swap(arr, left, right);
+			
+			//repeat everything until the array is partitioned
+		}
+		
+		//swap the pivot into where both left and right stopped
+		this.swap(arr, left, upperBound);
+		
+		return left;
+	}
+	
+	/*swap 2 positions helper method*/
+	private void swap(Record[] arr, int a, int b) {
+		Record temp = arr[a];
+		arr[a] = arr[b];
+		arr[b] = temp;
+	}
 }
