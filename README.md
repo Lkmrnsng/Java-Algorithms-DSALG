@@ -9,8 +9,15 @@
 - to test for all files
 
 ### JAN STATUS CHECK - Merge
-- Added  Code
-- Not Yet Tested
+- Code Complete
+- Tested
+- Results of 5 Consecutive runs using MillSec Function:
+    First Run: 25
+    Second Run: 23
+    Third Run: 28
+    Fourth Run: 32 
+    Fifth Run: 24
+- Also Added in the System.currentTimeMillis(); into MAIN (Please Check)
 
 ### MEGAN STATUS CHECK - Quicksort
 - tested for all files and works
