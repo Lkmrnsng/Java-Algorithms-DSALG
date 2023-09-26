@@ -11,11 +11,17 @@ public class Main {
         FileReader fileReader = new FileReader();
         SortingAlgorithms algos = new SortingAlgorithms();
         Record[] records = fileReader.readFile(filePath);
-		
+
+	long startTime = System.currentTimeMillis();
+        // YOUR ALGORITHM HERE
+        long endTime = System.currentTimeMillis(); 
+        long executionTime = endTime - startTime;
+
+	    
         //algos.insertionSort(records, records.length);
         //algos.selectionSort(records, records.length);
-		//@jan
-		//algos.quickSort(records, 0, records.length - 1);
+	//algos.mergeSort(records, 0, records.length - 1);
+	//algos.quickSort(records, 0, records.length - 1);
 
         for (Record record : records) {
             int id = record.getIdNumber();
