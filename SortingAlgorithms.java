@@ -42,44 +42,57 @@ public class SortingAlgorithms {
         }
     }
 
-    public void mergeSort(Record[] arr, int p, int r) {
+
+	
+// start and end are used to check the range
+// q is the result of the average of (start and end)
+    public void mergeSort(Record[] arr, int start, int end) {
         int q;
-        if(p < r)
-        {
-            q = (p + r) / 2;
-            mergeSort(arr, p, q);
-            mergeSort(arr, q + 1, r);
-            merge(arr, p, q, r);
-
+        if (start < end) {
+            q = (start + end) / 2;
+            mergeSort(arr, start, q); // Recursively sort the left subarray
+            mergeSort(arr, q + 1, end); // Recursively sort the right subarray
+            merge(arr, start, q, end); // Merge the sorted subarrays
         }
-
     }
 
-    private void merge(Record[] arr, int p, int q, int r) {
-        int n1 = q - p + 1;
-        int n2 = r - q;
+	
+    
+// left, mid and right are used to check the range
+// L is a temporary array in which the values of left to mid are copied to
+// R is the temporary array in which the values of mid + 1 and to right are copied to
+
+    private void merge(Record[] arr, int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
         int i, j;
     
         Record[] L = new Record[n1];
         Record[] R = new Record[n2];
     
         for (i = 0; i < n1; i++) {
-            L[i] = arr[p + i];
+            L[i] = arr[left + i]; // Copy elements from the left subarray to L
         }
     
         for (j = 0; j < n2; j++) {
-            R[j] = arr[q + 1 + j];
+            R[j] = arr[mid + 1 + j]; // Copy elements from the right subarray to R
         }
     
-        int k = p;
+        int k = left;
         i = 0;
         j = 0;
-        while (i < n1 || j < n2) { // Change the loop condition here
-            if (i < n1 && (j >= n2 || L[i].getIdNumber() <= R[j].getIdNumber())) {
-                arr[k] = L[i];
+
+        while (i < n1 || j < n2) { // Merge the sorted subarrays
+                                    // the conditions is to check that all elements have been procesed
+
+            if (i < n1 && (j >= n2 || L[i].getIdNumber() <= R[j].getIdNumber())) // comparison
+            {
+                arr[k] = L[i]; // If the current element in L is smaller or equal, put it in arr
                 i++;
-            } else {
-                arr[k] = R[j];
+            } 
+            else 
+            {
+                arr[k] = R[j]; // If the current element in R is smaller, put it in arr
                 j++;
             }
             k++;
