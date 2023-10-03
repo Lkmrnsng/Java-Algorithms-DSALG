@@ -10,20 +10,25 @@ public class SortingAlgorithms {
      * they will only be used in this class.
      */
 
+    /**
+     * This method implements the insertion sort algorithm given an array of records and the number of records to sort.
+     * @param arr The array of records to sort.
+     * @param n The number of records to sort.
+     */
     public void insertionSort(Record[] arr, int n) {
-        for (int i = 1; i < n; i++) {
-            Record key = arr[i];
-            int j = i - 1;
+        for (int i = 1; i < n; i++) { // Start from the second element
+            Record key = arr[i]; // The element to be inserted at the correct position
+            int j = i - 1; // The index of the previous element
     
-            while (j >= 0 && arr[j].getIdNumber() > key.getIdNumber()) {
-                arr[j + 1] = arr[j];
-                j = j - 1;
+            while (j >= 0 && arr[j].getIdNumber() > key.getIdNumber()) { // While previous element is greater than key and we haven't reached the beginning of the array
+                arr[j + 1] = arr[j]; //Shift the previous element to the right, this overwrites the value in the position of the key (we have a copy of it in the key variable)
+                j = j - 1; // Move to the previous element
             }
     
-            arr[j + 1] = key;
+            arr[j + 1] = key; // Insert the key in the correct position (found through the previous while loop)
         }
     }
-
+	
     public void selectionSort(Record[] arr, int n) {
         // TODO: Implement this sorting algorithm here.
 
