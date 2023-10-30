@@ -4,36 +4,90 @@ import java.util.*;
 
 public class SocialNetwork {
     HashMap<Integer, ArrayList<Integer>> adjacencyList;
+	ArrayList<Integer> friendList;
 
     public SocialNetwork() {
-        adjacencyList = new HashMap<>();
+        this.adjacencyList = new HashMap<Integer, ArrayList<Integer>>();
+		this.friendList = new ArrayList<Integer>();
     }
 
     public void addFriendship(int a, int b) {
-        adjacencyList.computeIfAbsent(a, k -> new ArrayList<>()).add(b);
-        adjacencyList.computeIfAbsent(b, k -> new ArrayList<>()).add(a);
+		//Adds friendship a as a key to the hash address b
+        this.adjacencyList.computeIfAbsent(b, k -> new ArrayList<>()).add(a);
     }
 
-    public List<Integer> getFriends(int id) {
-        return adjacencyList.getOrDefault(id, new ArrayList<>());
+    public void getFriendList(int id) {
+		int numberOfFriends = 0;
+		this.friendList.clear();
+		this.friendList = this.adjacencyList.get(id);
+		
+		if(this.friendList != null) {
+			numberOfFriends = this.friendList.size();
+			String formattedString = this.friendList.toString()
+				.replace(",", " ")  //remove the commas
+				.replace("[", "")   //remove the right bracket
+				.replace("]", "")   //remove the left bracket
+				.trim();            //remove trailing spaces from partially initialized arrays
+			
+			System.out.println("\nPerson " + id + " has " + numberOfFriends + " friends!");
+			System.out.println("List of friends: " + formattedString + "\n");
+		}
+		
+		else {
+			System.out.println("Error! Person " + id + " not found.\n");
+		}
     }
+
+	public void getConnections() {
+		//code here + edit function call if needed
+		//@jan feel free to add helper functions
+	}
 
     public static void main(String[] args) throws FileNotFoundException {
-        File file = new File("data/Rice31.txt"); // Replace with the actual file path
-        Scanner scanner = new Scanner(file);
+		//Gets filepath from user
+		System.out.print("Input file path: ");
+		Scanner userInput = new Scanner(System.in);
+		String input = userInput.next();
+		String filepath = "data/" + input;
+		
+		File file = new File(filepath);
+        Scanner fileScanner = new Scanner(file);
         SocialNetwork socialNetwork = new SocialNetwork();
 
-        int n = scanner.nextInt();
-        int e = scanner.nextInt();
+		//Loads file into adjacent list and in this case hashmap
+        int n = fileScanner.nextInt();
+        int e = fileScanner.nextInt();
 
         for (int i = 0; i < e; i++) {
-            int a = scanner.nextInt();
-            int b = scanner.nextInt();
+            int a = fileScanner.nextInt();
+            int b = fileScanner.nextInt();
             socialNetwork.addFriendship(a, b);
         }
-
-        // Example usage:
-        List<Integer> friendsOf123 = socialNetwork.getFriends(123);
-        System.out.println("Friends of 123: " + friendsOf123);
+		
+		fileScanner.close();
+        System.out.println("Graph loaded!");
+		
+		int menu = 0;
+		int firstid = 0;
+		int secondid = 0;
+		
+		//Recursively calls menu options
+		do {
+			System.out.println("MAIN MENU\n[1] Get friend list\n[2] Get connection\n[3] Exit");
+			System.out.print("\nEnter your choice: ");
+			menu = userInput.nextInt();
+			
+			if(menu == 1) {
+				System.out.print("Enter ID of person: ");
+				firstid = userInput.nextInt();
+				socialNetwork.getFriendList(firstid);
+			}
+			
+			if(menu == 2) {
+				//@jan code goes here
+			}
+			
+		} while (menu != 3);
+		userInput.close();
     }
 }
