@@ -14,6 +14,7 @@ public class SocialNetwork {
     public void addFriendship(int a, int b) {
 		//Adds friendship a as a key to the hash address b
         this.adjacencyList.computeIfAbsent(b, k -> new ArrayList<>()).add(a);
+		
     }
 
     public void getFriendList(int id) {
@@ -38,23 +39,82 @@ public class SocialNetwork {
 		}
     }
 
-	public void getConnections() {
+	public void getConnections(int personA, int personB) {
 		//code here + edit function call if needed
 		//@jan feel free to add helper functions
-	}
+        if (!adjacencyList.containsKey(personA) || !adjacencyList.containsKey(personB)) {
+            System.out.println("Error! One or both persons not found.");
+        } else {
+            List<Integer> path = findConnectionPath(personA, personB);
+            if (path != null) {
+                System.out.println("There is a connection from " + personA + " to " + personB + "!");
+                for (int i = 0; i < path.size() - 1; i++) {
+                    int current = path.get(i);
+                    int next = path.get(i + 1);
+                    System.out.println(current + " is friends with " + next);
+                }
+            } else {
+                System.out.println("No connection found between " + personA + " and " + personB);
+            }
+        }
+}
+
+private List<Integer> findConnectionPath(int personA, int personB) {
+    HashSet<Integer> visited = new HashSet<>();
+    List<Integer> path = new ArrayList<>();
+    LinkedList<Integer> queue = new LinkedList<>();
+    HashMap<Integer, Integer> parentMap = new HashMap<>();
+
+    queue.add(personA);
+    visited.add(personA);
+    parentMap.put(personA, -1);
+
+    while (!queue.isEmpty()) {
+        int currentPerson = queue.poll();
+        if (currentPerson == personB) {
+            List<Integer> connectionPath = new ArrayList<>();
+            int current = personB;
+            while (current != -1) {
+                connectionPath.add(current);
+                current = parentMap.get(current);
+            }
+            Collections.reverse(connectionPath);
+            return connectionPath;
+        }
+
+        for (int friend : adjacencyList.getOrDefault(currentPerson, new ArrayList<>())) {
+            if (!visited.contains(friend)) {
+                queue.add(friend);
+                visited.add(friend);
+                parentMap.put(friend, currentPerson);
+            }
+        }
+    }
+
+    return null;
+}
 
     public static void main(String[] args) throws FileNotFoundException {
 		//Gets filepath from user
-		System.out.print("Input file path: ");
+
+        int menu = 0;
+		int firstid = 0;
+		int secondid = 0;
+
+		System.out.print("Input file path (without '.txt'): ");
 		Scanner userInput = new Scanner(System.in);
+
+
 		String input = userInput.next();
-		String filepath = "data/" + input;
+		String filepath = "data/" + input + ".txt"; // Add ".txt" to the file name
 		
 		File file = new File(filepath);
-        Scanner fileScanner = new Scanner(file);
-        SocialNetwork socialNetwork = new SocialNetwork();
 
-		//Loads file into adjacent list and in this case hashmap
+        if (file.exists()) { // Check if the file exists
+   		Scanner fileScanner = new Scanner(file);
+    	SocialNetwork socialNetwork = new SocialNetwork();
+
+			//Loads file into adjacent list and in this case hashmap
         int n = fileScanner.nextInt();
         int e = fileScanner.nextInt();
 
@@ -66,10 +126,7 @@ public class SocialNetwork {
 		
 		fileScanner.close();
         System.out.println("Graph loaded!");
-		
-		int menu = 0;
-		int firstid = 0;
-		int secondid = 0;
+	
 		
 		//Recursively calls menu options
 		do {
@@ -85,9 +142,20 @@ public class SocialNetwork {
 			
 			if(menu == 2) {
 				//@jan code goes here
+			System.out.print("Enter the ID of the first person: ");
+            firstid = userInput.nextInt();
+            System.out.print("Enter the ID of the second person: ");
+            secondid = userInput.nextInt();
+            socialNetwork.getConnections(firstid, secondid);
 			}
 			
 		} while (menu != 3);
+		} 
+		else{
+    		System.out.println("File not found: " + filepath);
+			}
+
+		
 		userInput.close();
     }
 }
