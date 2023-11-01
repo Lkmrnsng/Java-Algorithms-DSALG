@@ -12,7 +12,7 @@ public class SocialNetwork {
     }
 
     public void addFriendship(int a, int b) {
-		//Adds friendship a as a key to the hash address b
+		//Adds friendship a as a key to the hash address b, if the friendship doesn't exist yet
         this.adjacencyList.computeIfAbsent(b, k -> new ArrayList<>()).add(a);
 		
     }
@@ -40,12 +40,10 @@ public class SocialNetwork {
     }
 
 	public void getConnections(int personA, int personB) {
-		//code here + edit function call if needed
-		//@jan feel free to add helper functions
-        if (!adjacencyList.containsKey(personA) || !adjacencyList.containsKey(personB)) {
+        if (!this.adjacencyList.containsKey(personA) || !this.adjacencyList.containsKey(personB)) {
             System.out.println("Error! One or both persons not found.");
         } else {
-            List<Integer> path = findConnectionPath(personA, personB);
+            ArrayList<Integer> path = findConnectionPath(personA, personB);
             if (path != null) {
                 System.out.println("There is a connection from " + personA + " to " + personB + "!");
                 for (int i = 0; i < path.size() - 1; i++) {
@@ -60,10 +58,10 @@ public class SocialNetwork {
 }
 
 private List<Integer> findConnectionPath(int personA, int personB) {
-    HashSet<Integer> visited = new HashSet<>();
-    List<Integer> path = new ArrayList<>();
-    LinkedList<Integer> queue = new LinkedList<>();
-    HashMap<Integer, Integer> parentMap = new HashMap<>();
+    HashSet<Integer> visited = new HashSet<Integer>();
+    ArrayList<Integer> path = new ArrayList<Integer>();
+    LinkedList<Integer> queue = new LinkedList<Integer>();
+    HashMap<Integer, Integer> parentMap = new HashMap<Integer, Integer>();
 
     queue.add(personA);
     visited.add(personA);
@@ -72,7 +70,7 @@ private List<Integer> findConnectionPath(int personA, int personB) {
     while (!queue.isEmpty()) {
         int currentPerson = queue.poll();
         if (currentPerson == personB) {
-            List<Integer> connectionPath = new ArrayList<>();
+            ArrayList<Integer> connectionPath = new ArrayList<Integer>();
             int current = personB;
             while (current != -1) {
                 connectionPath.add(current);
@@ -82,7 +80,7 @@ private List<Integer> findConnectionPath(int personA, int personB) {
             return connectionPath;
         }
 
-        for (int friend : adjacencyList.getOrDefault(currentPerson, new ArrayList<>())) {
+        for (int friend : this. adjacencyList.getOrDefault(currentPerson, new ArrayList<>())) {
             if (!visited.contains(friend)) {
                 queue.add(friend);
                 visited.add(friend);
