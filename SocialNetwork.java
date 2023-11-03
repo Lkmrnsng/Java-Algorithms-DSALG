@@ -57,40 +57,43 @@ public class SocialNetwork {
         }
 }
 
+//  breadth-first search (BFS)
 private List<Integer> findConnectionPath(int personA, int personB) {
-    HashSet<Integer> visited = new HashSet<Integer>();
-    ArrayList<Integer> path = new ArrayList<Integer>();
-    LinkedList<Integer> queue = new LinkedList<Integer>();
-    HashMap<Integer, Integer> parentMap = new HashMap<Integer, Integer>();
+    HashSet<Integer> visited = new HashSet<>();                         // used to monitor the people that have visited a node so that it wont repeat
+    List<Integer> path = new ArrayList<>();                             // stores the path when a connection is determined between person a and b
+    LinkedList<Integer> queue = new LinkedList<>();                     // used to implement BFS exploration, starts with person a
+    HashMap<Integer, Integer> parentMap = new HashMap<>();              // imaginary map that is used of the parent that is encountered during the BFS
+                                                                        // used to trace the path from person b to person a
 
-    queue.add(personA);
-    visited.add(personA);
-    parentMap.put(personA, -1);
+    queue.add(personA);                                                 // adds person a to the queue
+    visited.add(personA);                                               // marks person a as visited
+    parentMap.put(personA, -1);                                         // sets the parent of person a to -1,which means persona is the startpoint
 
-    while (!queue.isEmpty()) {
-        int currentPerson = queue.poll();
-        if (currentPerson == personB) {
-            ArrayList<Integer> connectionPath = new ArrayList<Integer>();
-            int current = personB;
-            while (current != -1) {
-                connectionPath.add(current);
-                current = parentMap.get(current);
+    while (!queue.isEmpty()) {                                          // repeats till there are no more people to explore
+        int currentPerson = queue.poll();                               // removes the first person in the queue 
+        if (currentPerson == personB) {                                 // checks if person b is found, if yes, a connection is found
+            List<Integer> connectionPath = new ArrayList<>();           // stores the path from person b to person a
+            int current = personB;                                      // person b is the current
+            while (current != -1) {                                     // traces the path from person b to person a
+                connectionPath.add(current);                            // adds the current person to the path
+                current = parentMap.get(current);                       // sets the current person to the parent of the current person
             }
-            Collections.reverse(connectionPath);
-            return connectionPath;
+            Collections.reverse(connectionPath);                        // reverses the path
+            return connectionPath;                                      // returns the path
         }
 
-        for (int friend : this. adjacencyList.getOrDefault(currentPerson, new ArrayList<>())) {
-            if (!visited.contains(friend)) {
-                queue.add(friend);
-                visited.add(friend);
-                parentMap.put(friend, currentPerson);
+        for (int friend : adjacencyList.getOrDefault(currentPerson, new ArrayList<>())) {   // explore the friends of the current person
+            if (!visited.contains(friend)) {                                                // checks if the friend has been visited
+                queue.add(friend);                                                          // adds the friend to the queue
+                visited.add(friend);                                                        // marks the friend as visited
+                parentMap.put(friend, currentPerson);                                       // sets the parent of the friend to the current person
             }
         }
     }
 
     return null;
 }
+
 
     public static void main(String[] args) throws FileNotFoundException {
 		//Gets filepath from user
