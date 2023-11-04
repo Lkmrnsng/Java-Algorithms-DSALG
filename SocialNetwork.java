@@ -42,7 +42,9 @@ public class SocialNetwork {
 	public void getConnections(int personA, int personB) {
         if (!this.adjacencyList.containsKey(personA) || !this.adjacencyList.containsKey(personB)) {
             System.out.println("Error! One or both persons not found.");
-        } else {
+        } 
+		
+		else {
             ArrayList<Integer> path = findConnectionPath(personA, personB);
             if (path != null) {
                 System.out.println("There is a connection from " + personA + " to " + personB + "!");
@@ -51,49 +53,56 @@ public class SocialNetwork {
                     int next = path.get(i + 1);
                     System.out.println(current + " is friends with " + next);
                 }
-            } else {
+				
+				System.out.print("\n");
+            } 
+			
+			else {
                 System.out.println("No connection found between " + personA + " and " + personB);
+				System.out.print("\n");
             }
         }
-}
+	}
 
-//  breadth-first search (BFS)
-private List<Integer> findConnectionPath(int personA, int personB) {
-    HashSet<Integer> visited = new HashSet<>();                         // used to monitor the people that have visited a node so that it wont repeat
-    List<Integer> path = new ArrayList<>();                             // stores the path when a connection is determined between person a and b
-    LinkedList<Integer> queue = new LinkedList<>();                     // used to implement BFS exploration, starts with person a
-    HashMap<Integer, Integer> parentMap = new HashMap<>();              // imaginary map that is used of the parent that is encountered during the BFS
-                                                                        // used to trace the path from person b to person a
+	//  breadth-first search (BFS)
+	private ArrayList<Integer> findConnectionPath(int personA, int personB) {
+		HashSet<Integer> visited = new HashSet<Integer>();                  // used to monitor the people that have visited a node so that it wont repeat
+		ArrayList<Integer> path = new ArrayList<Integer>();                 // stores the path when a connection is determined between person a and b
+		LinkedList<Integer> queue = new LinkedList<>();                     // used to implement BFS exploration, starts with person a
+		HashMap<Integer, Integer> parentMap = new HashMap<>();              // imaginary map that is used of the parent that is encountered during the BFS
+																			// used to trace the path from person b to person a
 
-    queue.add(personA);                                                 // adds person a to the queue
-    visited.add(personA);                                               // marks person a as visited
-    parentMap.put(personA, -1);                                         // sets the parent of person a to -1,which means persona is the startpoint
+		queue.add(personA);                                                 // adds person a to the queue
+		visited.add(personA);                                               // marks person a as visited
+		parentMap.put(personA, -1);                                         // sets the parent of person a to -1,which means persona is the startpoint
 
-    while (!queue.isEmpty()) {                                          // repeats till there are no more people to explore
-        int currentPerson = queue.poll();                               // removes the first person in the queue 
-        if (currentPerson == personB) {                                 // checks if person b is found, if yes, a connection is found
-            List<Integer> connectionPath = new ArrayList<>();           // stores the path from person b to person a
-            int current = personB;                                      // person b is the current
-            while (current != -1) {                                     // traces the path from person b to person a
-                connectionPath.add(current);                            // adds the current person to the path
-                current = parentMap.get(current);                       // sets the current person to the parent of the current person
-            }
-            Collections.reverse(connectionPath);                        // reverses the path
-            return connectionPath;                                      // returns the path
-        }
+		while (!queue.isEmpty()) {                                          // repeats till there are no more people to explore
+			int currentPerson = queue.poll();                               // removes the first person in the queue 
+			
+			if (currentPerson == personB) {                                 // checks if person b is found, if yes, a connection is found
+				ArrayList<Integer> connectionPath = new ArrayList<Integer>();  // stores the path from person b to person a
+				int current = personB;                                      // person b is the current
+				
+				while (current != -1) {                                     // traces the path from person b to person a
+					connectionPath.add(current);                            // adds the current person to the path
+					current = parentMap.get(current);                       // sets the current person to the parent of the current person
+				}
+				
+				Collections.reverse(connectionPath);                        // reverses the path
+				return connectionPath;                                      // returns the path
+			}
 
-        for (int friend : adjacencyList.getOrDefault(currentPerson, new ArrayList<>())) {   // explore the friends of the current person
-            if (!visited.contains(friend)) {                                                // checks if the friend has been visited
-                queue.add(friend);                                                          // adds the friend to the queue
-                visited.add(friend);                                                        // marks the friend as visited
-                parentMap.put(friend, currentPerson);                                       // sets the parent of the friend to the current person
-            }
-        }
-    }
-
-    return null;
-}
-
+			for (int friend : adjacencyList.getOrDefault(currentPerson, new ArrayList<Integer>())) { // explore the friends of the current person
+				if (!visited.contains(friend)) {                                                // checks if the friend has been visited
+					queue.add(friend);                                                          // adds the friend to the queue
+					visited.add(friend);                                                        // marks the friend as visited
+					parentMap.put(friend, currentPerson);                                       // sets the parent of the friend to the current person
+				}
+			}
+		}
+		
+		return null;
+	}
 
     public static void main(String[] args) throws FileNotFoundException {
 		//Gets filepath from user
@@ -102,7 +111,7 @@ private List<Integer> findConnectionPath(int personA, int personB) {
 		int firstid = 0;
 		int secondid = 0;
 
-		System.out.print("Input file path (without '.txt'): ");
+		System.out.print("Input file path without .txt: ");
 		Scanner userInput = new Scanner(System.in);
 
 
