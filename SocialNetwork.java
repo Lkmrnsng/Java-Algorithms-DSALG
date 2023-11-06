@@ -111,13 +111,23 @@ public class SocialNetwork {
 		int firstid = 0;
 		int secondid = 0;
 
-		System.out.print("Input file path without .txt: ");
+		System.out.print("Input file path: ");
 		Scanner userInput = new Scanner(System.in);
 
-
 		String input = userInput.next();
-		String filepath = "data/" + input + ".txt"; // Add ".txt" to the file name
+		char c = '\0';
+		boolean appendFound = false;
+		String filepath = input;
 		
+		for(int i = 0; i < input.length(); i++) {
+			c = input.charAt(i);
+			if(c == '.')
+				appendFound = true;
+		}
+		
+		filepath = "data/" + filepath; // Add "data/" to the file name	
+		if(!appendFound)
+			filepath = filepath + ".txt"; // Add ".txt" to the file name
 		File file = new File(filepath);
 
         if (file.exists()) { // Check if the file exists
