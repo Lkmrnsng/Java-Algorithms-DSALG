@@ -1,12 +1,2 @@
 # DSALG-MP
-### LUKE STATUS CHECK
-- 
-
-### SHAWN STATUS CHECK
-- 
-
-### JAN STATUS CHECK
-- 
-
-### MEGAN STATUS CHECK 
-- 
+Algorithms on Reading Files and Detecting Connections in a network-style dataset
